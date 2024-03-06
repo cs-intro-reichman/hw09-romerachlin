@@ -3,12 +3,11 @@
  *  However, users of this class are not aware of the Node objects. As far as they are concerned,
  *  the class represents a list of CharData objects. Likwise, the API of the class does not
  *  mention the existence of the Node objects). */
-public class List {
+public class List 
+{
 
-    // Points to the first node in this list
+
     private Node first;
-
-    // The number of elements in this list
     private int size;
 	
     /** Constructs an empty list. */
@@ -21,104 +20,112 @@ public class List {
     public int getSize() {
  	      return size;
     }
-
+    public Node getFirstNode() {
+        return first;
+    }
     /** Returns the first element in the list */
     public CharData getFirst() {
         return first.cp;
     }
 
     /** GIVE Adds a CharData object with the given character to the beginning of this list. */
-    public void addFirst(char chr) {
-        Node newNode = new Node(new CharData(chr));
-        newNode.next = this.first;
-        this.first = newNode;
-        this.size++;
-        
+    public void addFirst(char chr) 
+    {
+        Node curr = new Node(new CharData(chr));
+        curr.next = first;
+        first = curr;
+        size++;
     }
     
     /** GIVE Textual representation of this list. */
-    public String toString() {
-        if (size == 0) return "()";
-    // Starting from the first node, iterates through this list
-    // and builds the string incrementally
+    public String toString() 
+    {
+        Node cuurNode = first;
         String str = "(";
-        Node current = first;
-        while (current != null) {
-         str += current.cp + " ";
-         current = current.next;
-        }
+        while (cuurNode!=null) 
+        {
+              
+                str += cuurNode.cp.toString() + " ";
+                cuurNode = cuurNode.next;
 
-// Removes the trailing space and adds the ‘)’
-return str.substring(0, str.length() - 1) + ")";
+        }
+        return (str.substring(0, str.length()-1) + ")");
     }
 
     /** Returns the index of the first CharData object in this list
      *  that has the same chr value as the given char,
      *  or -1 if there is no such object in this list. */
-    public int indexOf(char chr) {
+    public int indexOf(char chr) 
+    {
         Node current = first;
-        int index = 0;
-        while (current != null) {
-        if (current.cp.equals(chr)) {
-        return index;
+        int count = 0;
+        while (current!=null)
+        {
+            if(current.cp.equals(chr))
+                return count;
+            count++;
+            current = current.next;    
         }
-        current = current.next;
-        index++;
-        }
-        return -1; // Value not found
-        }
+        return -1;
+
+    }
 
     /** If the given character exists in one of the CharData objects in this list,
      *  increments its counter. Otherwise, adds a new CharData object with the
      *  given chr to the beginning of this list. */
-    public void update(char chr) {
-        Node current = first;
-        while (current != null) {
-            if (current.cp.equals(chr)) {
-            current.counter++;
-            }
-            current = current.next;
-            index++;
-            }
-            return -1; // Value not found
+    public void update(char chr) 
+    {
+        if (indexOf(chr)>-1) 
+        {
+            get(indexOf(chr)).count++;
+            return;
+        }
+        addFirst(chr);
+
     }
 
     /** GIVE If the given character exists in one of the CharData objects
      *  in this list, removes this CharData object from the list and returns
      *  true. Otherwise, returns false. */
-    public boolean remove(char chr) {
-        if (indexOf(chr) < 0 || indexOf(chr) >= this.size || this.first == null) {
-            // Index out of bounds or list is empty
-            return false;
-            }
-            if (indexOf(chr) == 0) {
-            this.first = this.first.next; // Remove first
+    public boolean remove(char chr) 
+    {
+        Node prev = first;
+        Node currNode = first.next;
+        if (first.cp.equals(chr)) 
+        {
+            first = first.next;
+            size--;
             return true;
+        }
+        while (currNode!=null) 
+        {
+            if (currNode.cp.equals(chr)) 
+            {
+                prev.next = currNode.next;
+                size--;
+                return true;
             }
-            // Traverse the list to find the node at the given index
-            Node current = this.first;
-            for (int i = 0; i < indexOf(chr) - 1; i++) {
-            current = current.next;
-            }
-            // Remove the node at the given index
-            current.next = current.next.next;
-            this.size--; // Decrease the size of the list
-            return true;
-            
+            prev = prev.next;
+            currNode = currNode.next;
+        }
+        return false;
+        
     }
 
     /** Returns the CharData object at the specified index in this list. 
      *  If the index is negative or is greater than the size of this list, 
      *  throws an IndexOutOfBoundsException. */
-    public CharData get(int index) {
-        if (index >= this.size || index < 0){
-            throw new IndexOutOfBoundsException("illegal index " + index);
-            }
-            Node current = this.first;
-            for (int i = 0; i < index; i++) {
-            current = current.next;
-            }
-            return current.cp;
+    public CharData get(int index)
+    {
+        if (index>= size) 
+        {
+            throw new IndexOutOfBoundsException();
+        }
+        Node curNode = first;
+        for(int i=0;i<index;i++)
+            curNode=curNode.next;
+         return curNode.cp;   
+
     }
 
     /** Returns an array of CharData objects, containing all the CharData objects in this list. */
