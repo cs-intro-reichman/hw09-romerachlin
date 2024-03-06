@@ -44,10 +44,10 @@ public class List {
         String str = "(";
         Node current = first;
         while (current != null) {
-        str += current.cp + " ";
-        current = current.next;
+         str += current.cp + " ";
+         current = current.next;
         }
-        
+
 // Removes the trailing space and adds the ‘)’
 return str.substring(0, str.length() - 1) + ")";
     }
@@ -79,7 +79,24 @@ return str.substring(0, str.length() - 1) + ")";
      *  in this list, removes this CharData object from the list and returns
      *  true. Otherwise, returns false. */
     public boolean remove(char chr) {
-        // Your code goes here
+        if (indexOf(chr) < 0 || indexOf(chr) >= this.size || this.first == null) {
+            // Index out of bounds or list is empty
+            return false;
+            }
+            if (indexOf(chr) == 0) {
+            this.first = this.first.next; // Remove first
+            return true;
+            }
+            // Traverse the list to find the node at the given index
+            Node current = this.first;
+            for (int i = 0; i < indexOf(chr) - 1; i++) {
+            current = current.next;
+            }
+            // Remove the node at the given index
+            current.next = current.next.next;
+            this.size--; // Decrease the size of the list
+            return true;
+            
     }
 
     /** Returns the CharData object at the specified index in this list. 
