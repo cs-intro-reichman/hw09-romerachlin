@@ -29,20 +29,44 @@ public class List {
 
     /** GIVE Adds a CharData object with the given character to the beginning of this list. */
     public void addFirst(char chr) {
-        // Your code goes here
+        Node newNode = new Node(new CharData(chr));
+        newNode.next = this.first;
+        this.first = newNode;
+        this.size++;
+        
     }
     
     /** GIVE Textual representation of this list. */
     public String toString() {
-        // Your code goes here
+        if (size == 0) return "()";
+    // Starting from the first node, iterates through this list
+    // and builds the string incrementally
+        String str = "(";
+        Node current = first;
+        while (current != null) {
+        str += current.cp + " ";
+        current = current.next;
+        }
+        
+// Removes the trailing space and adds the ‘)’
+return str.substring(0, str.length() - 1) + ")";
     }
 
     /** Returns the index of the first CharData object in this list
      *  that has the same chr value as the given char,
      *  or -1 if there is no such object in this list. */
     public int indexOf(char chr) {
-        // Your code goes here
-    }
+        Node current = first;
+        int index = 0;
+        while (current != null) {
+        if (current.cp.equals(chr)) {
+        return index;
+        }
+        current = current.next;
+        index++;
+        }
+        return -1; // Value not found
+        }
 
     /** If the given character exists in one of the CharData objects in this list,
      *  increments its counter. Otherwise, adds a new CharData object with the
