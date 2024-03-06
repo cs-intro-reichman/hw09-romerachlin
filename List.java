@@ -103,7 +103,14 @@ return str.substring(0, str.length() - 1) + ")";
      *  If the index is negative or is greater than the size of this list, 
      *  throws an IndexOutOfBoundsException. */
     public CharData get(int index) {
-        // Your code goes here
+        if (index >= this.size || index < 0){
+            throw new IndexOutOfBoundsException("illegal index " + index);
+            }
+            Node current = this.first;
+            for (int i = 0; i < index; i++) {
+            current = current.next;
+            }
+            return current.cp;
     }
 
     /** Returns an array of CharData objects, containing all the CharData objects in this list. */
