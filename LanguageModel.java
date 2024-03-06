@@ -153,9 +153,9 @@ public class LanguageModel {
       lm.train(fileName);
       System.out.println(lm.generate(initalText, generatedTextLength));	
     }
-    public static void main(String[] args) {
-		// Your code goes here
-    }
+//     public static void main(String[] args) {
+// 		// Your code goes here
+//     }
 }
 
 
