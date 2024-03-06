@@ -31,22 +31,22 @@ public class List
     /** GIVE Adds a CharData object with the given character to the beginning of this list. */
     public void addFirst(char chr) 
     {
-        Node curr = new Node(new CharData(chr));
-        curr.next = first;
-        first = curr;
+        Node current = new Node(new CharData(chr));
+        current.next = first;
+        first = current;
         size++;
     }
     
     /** GIVE Textual representation of this list. */
     public String toString() 
     {
-        Node cuurNode = first;
+        Node currentNode = first;
         String str = "(";
-        while (cuurNode!=null) 
+        while (currentNode!=null) 
         {
               
-                str += cuurNode.cp.toString() + " ";
-                cuurNode = cuurNode.next;
+                str += currentNode.cp.toString() + " ";
+                currentNode = currentNode.next;
 
         }
         return (str.substring(0, str.length()-1) + ")");
@@ -90,23 +90,23 @@ public class List
     public boolean remove(char chr) 
     {
         Node prev = first;
-        Node currNode = first.next;
+        Node currentNode = first.next;
         if (first.cp.equals(chr)) 
         {
             first = first.next;
             size--;
             return true;
         }
-        while (currNode!=null) 
+        while (currentNode!=null) 
         {
-            if (currNode.cp.equals(chr)) 
+            if (currentNode.cp.equals(chr)) 
             {
-                prev.next = currNode.next;
+                prev.next = currentNode.next;
                 size--;
                 return true;
             }
             prev = prev.next;
-            currNode = currNode.next;
+            currentNode = currentNode.next;
         }
         return false;
         
@@ -121,10 +121,10 @@ public class List
         {
             throw new IndexOutOfBoundsException();
         }
-        Node curNode = first;
+        Node currentNode = first;
         for(int i=0;i<index;i++)
-            curNode=curNode.next;
-         return curNode.cp;   
+            currentNode = currentNode.next;
+         return currentNode.cp;   
 
     }
 
