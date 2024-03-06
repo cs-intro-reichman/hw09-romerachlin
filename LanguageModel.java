@@ -33,25 +33,50 @@ public class LanguageModel {
 
     /** Builds a language model from the text in the given file (the corpus). */
 	public void train(String fileName) {
-		// Your code goes here
-	}
+		String wndw = "";
+        char c;
+
+        In in = new In(fileName);
+        for (int i = 0; i < windowLength; i++) {
+            wndw = wndw + in.readChar();
+        }
+
+        while (!in.isEmpty()) {
+            c = in.readChar();
+            
+            List probs = CharDataMap.get(wndw);
+            if (probs == null) {
+                probs = new List();
+                CharDataMap.put(wndw, probs);
+            }
+            probs.update(c);
+
+            wndw = wndw + c;
+            wndw = wndw.substring(1);
+        }
+
+        for (List probs : CharDataMap.values()) {
+            calculateProbabilities(probs);
+        }
+    }
+	
 
     // Computes and sets the probabilities (p and cp fields) of all the
 	// characters in the given list. */
 	public void calculateProbabilities(List probs) {				
-        int sumListNumber = 0;
+        int sum = 0;
 
         ListIterator listIterator = probs.listIterator(0);
         while (listIterator.hasNext()) {
             CharData charData = listIterator.next();
-            sumListNumber += charData.count;
+            sum += charData.count;
         }
 
         listIterator = probs.listIterator(0);
         double counter = 0;
         while (listIterator.hasNext()) {
             CharData charData = listIterator.next();
-            charData.p = ((double) charData.count) / sumListNumber;
+            charData.p = ((double) charData.count) / sum;
             counter += charData.p;
             charData.cp = counter;
         }
