@@ -72,7 +72,15 @@ return str.substring(0, str.length() - 1) + ")";
      *  increments its counter. Otherwise, adds a new CharData object with the
      *  given chr to the beginning of this list. */
     public void update(char chr) {
-        // Your code goes here
+        Node current = first;
+        while (current != null) {
+            if (current.cp.equals(chr)) {
+            current.counter++;
+            }
+            current = current.next;
+            index++;
+            }
+            return -1; // Value not found
     }
 
     /** GIVE If the given character exists in one of the CharData objects
